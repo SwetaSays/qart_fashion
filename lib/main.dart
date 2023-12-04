@@ -1,115 +1,625 @@
+// import 'package:flutter/material.dart';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Blog App',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: PostListScreen(),
+//     );
+//   }
+// }
+//
+// class PostListScreen extends StatefulWidget {
+//   @override
+//   _PostListScreenState createState() => _PostListScreenState();
+// }
+//
+// class _PostListScreenState extends State<PostListScreen> {
+//   List<Post> posts = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchPosts();
+//   }
+//
+//   Future<void> fetchPosts() async {
+//     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+//     if (response.statusCode == 200) {
+//       setState(() {
+//         posts = (json.decode(response.body) as List).map((data) => Post.fromJson(data)).toList();
+//       });
+//     } else {
+//       throw Exception('Failed to load posts');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Posts'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: posts.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(posts[index].title),
+//             subtitle: Text(posts[index].authorName),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => PostDetailsScreen(post: posts[index]),
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+//
+// class PostDetailsScreen extends StatefulWidget {
+//   final Post post;
+//
+//   const PostDetailsScreen({required this.post});
+//
+//   @override
+//   _PostDetailsScreenState createState() => _PostDetailsScreenState();
+// }
+//
+// class _PostDetailsScreenState extends State<PostDetailsScreen> {
+//   List<Comment> comments = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchComments();
+//   }
+//
+//   Future<void> fetchComments() async {
+//     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments'));
+//     if (response.statusCode == 200) {
+//       setState(() {
+//         comments = (json.decode(response.body) as List).map((data) => Comment.fromJson(data)).toList();
+//       });
+//     } else {
+//       throw Exception('Failed to load comments');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Post Details'),
+//       ),
+//       body: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               widget.post.title,
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               'Author: ${widget.post.authorName}',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//           ),
+//           Expanded(
+//             child: ListView.builder(
+//               itemCount: comments.length,
+//               itemBuilder: (context, index) {
+//                 return ListTile(
+//                   title: Text(comments[index].name),
+//                   subtitle: Text(comments[index].body),
+//                 );
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+//
+// class Post {
+//   final int id;
+//   final String title;
+//   final String authorName;
+//
+//   Post({required this.id, required this.title, required this.authorName});
+//
+//   factory Post.fromJson(Map<String, dynamic> json) {
+//     return Post(
+//       id: json['id'],
+//       title: json['title'],
+//       authorName: 'Unknown', // Author name is not provided in the posts API, modify this according to your requirements.
+//     );
+//   }
+// }
+//
+// class Comment {
+//   final String name;
+//   final String body;
+//
+//   Comment({required this.name, required this.body});
+//
+//   factory Comment.fromJson(Map<String, dynamic> json) {
+//     return Comment(
+//       name: json['name'],
+//       body: json['body'],
+//     );
+//   }
+// }
+
+
+/////////////////////////////////////////////////////////////////////////
+// import 'package:flutter/material.dart';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+//
+// void main() {
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Blog App',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: PostListScreen(),
+//     );
+//   }
+// }
+//
+// class Author {
+//   final int id;
+//   final String name;
+//   final String username;
+//   final String email;
+//   final String phone;
+//   final String website;
+//
+//   Author({
+//     required this.id,
+//     required this.name,
+//     required this.username,
+//     required this.email,
+//     required this.phone,
+//     required this.website,
+//   });
+//
+//   factory Author.fromJson(Map<String, dynamic> json) {
+//     return Author(
+//       id: json['id'],
+//       name: json['name'],
+//       username: json['username'],
+//       email: json['email'],
+//       phone: json['phone'],
+//       website: json['website'],
+//     );
+//   }
+// }
+//
+// class Post {
+//   final int id;
+//   final String title;
+//   final Author author;
+//
+//   Post({
+//     required this.id,
+//     required this.title,
+//     required this.author,
+//   });
+//
+//   factory Post.fromJson(Map<String, dynamic> json) {
+//     return Post(
+//       id: json['id'],
+//       title: json['title'],
+//       author: Author.fromJson(json), // Use the Author.fromJson method to parse author details
+//     );
+//   }
+// }
+//
+// class Comment {
+//   final String name;
+//   final String body;
+//
+//   Comment({required this.name, required this.body});
+//
+//   factory Comment.fromJson(Map<String, dynamic> json) {
+//     return Comment(
+//       name: json['name'],
+//       body: json['body'],
+//     );
+//   }
+// }
+//
+// class PostListScreen extends StatefulWidget {
+//   @override
+//   _PostListScreenState createState() => _PostListScreenState();
+// }
+//
+// class _PostListScreenState extends State<PostListScreen> {
+//   List<Post> posts = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchPosts();
+//   }
+//
+//   Future<void> fetchPosts() async {
+//     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+//     if (response.statusCode == 200) {
+//       final List<dynamic> postsJson = json.decode(response.body);
+//       List<Post> postsList = [];
+//
+//       for (var postData in postsJson) {
+//         // Fetch author details for each post
+//         final authorResponse = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users/${postData["userId"]}'));
+//         if (authorResponse.statusCode == 200) {
+//           final Author author = Author.fromJson(json.decode(authorResponse.body));
+//           final Post post = Post.fromJson(postData)..author = author;
+//           postsList.add(post);
+//         }
+//       }
+//
+//       setState(() {
+//         posts = postsList;
+//       });
+//     } else {
+//       throw Exception('Failed to load posts');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Posts'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: posts.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(posts[index].title),
+//             subtitle: Text('Author: ${posts[index].author.name}'),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => PostDetailsScreen(post: posts[index]),
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+//
+// class PostDetailsScreen extends StatefulWidget {
+//   final Post post;
+//
+//   const PostDetailsScreen({required this.post});
+//
+//   @override
+//   _PostDetailsScreenState createState() => _PostDetailsScreenState();
+// }
+//
+// class _PostDetailsScreenState extends State<PostDetailsScreen> {
+//   List<Comment> comments = [];
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     fetchComments();
+//   }
+//
+//   Future<void> fetchComments() async {
+//     final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments'));
+//     if (response.statusCode == 200) {
+//       setState(() {
+//         comments = (json.decode(response.body) as List).map((data) => Comment.fromJson(data)).toList();
+//       });
+//     } else {
+//       throw Exception('Failed to load comments');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Post Details'),
+//       ),
+//       body: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               widget.post.title,
+//               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+//             ),
+//           ),
+//           Padding(
+//             padding: const EdgeInsets.all(8.0),
+//             child: Text(
+//               'Author: ${widget.post.author.name}',
+//               style: TextStyle(fontSize: 16),
+//             ),
+//           ),
+//           Expanded(
+//             child: ListView.builder(
+//               itemCount: comments.length,
+//               itemBuilder: (context, index) {
+//                 return ListTile(
+//                   title: Text(comments[index].name),
+//                   subtitle: Text(comments[index].body),
+//                 );
+//               },
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+///////////////////////////////////////////////////////////
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Blog App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: PostListScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class Author {
+  final int id;
+  final String name;
+  final String username;
+  final String email;
+  final String phone;
+  final String website;
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  Author({
+    required this.id,
+    required this.name,
+    required this.username,
+    required this.email,
+    required this.phone,
+    required this.website,
+  });
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  factory Author.fromJson(Map<String, dynamic> json) {
+    return Author(
+      id: json['id'],
+      name: json['name'],
+      username: json['username'],
+      email: json['email'],
+      phone: json['phone'],
+      website: json['website'],
+    );
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class Post {
+  final int id;
+  final String title;
+  final String body; // Add body property for post details
+  final Map<String, dynamic> author; // Change type to Map<String, dynamic> for author details
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Post({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.author,
+  });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json['id'],
+      title: json['title'],
+      body: json['body'], // Map 'body' from the response
+      author: json['author'], // Change to Map<String, dynamic>
+    );
+  }
+}
+
+class Comment {
+  final String name;
+  final String body;
+
+  Comment({required this.name, required this.body});
+
+  factory Comment.fromJson(Map<String, dynamic> json) {
+    return Comment(
+      name: json['name'],
+      body: json['body'],
+    );
+  }
+}
+
+class PostListScreen extends StatefulWidget {
+  @override
+  _PostListScreenState createState() => _PostListScreenState();
+}
+
+class _PostListScreenState extends State<PostListScreen> {
+  List<Post> posts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts();
+  }
+
+  Future<void> fetchPosts() async {
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    if (response.statusCode == 200) {
+      final List<dynamic> postsJson = json.decode(response.body);
+      List<Post> postsList = [];
+
+      for (var postData in postsJson) {
+        // Fetch author details for each post
+        final authorResponse = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users/${postData["userId"]}'));
+        if (authorResponse.statusCode == 200) {
+          final Author author = Author.fromJson(json.decode(authorResponse.body));
+          final Post post = Post.fromJson({
+            'id': postData['id'],
+            'title': postData['title'],
+            'body': postData['body'], // Map 'body' from the response
+            'author': author,
+          });
+          postsList.add(post);
+        }
+      }
+
+      setState(() {
+        posts = postsList;
+      });
+    } else {
+      throw Exception('Failed to load posts');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text('Posts'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(posts[index].title),
+            subtitle: Text('Author: ${posts[index].author["name"]}'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PostDetailsScreen(post: posts[index]),
+                ),
+              );
+            },
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class PostDetailsScreen extends StatefulWidget {
+  final Post post;
+
+  const PostDetailsScreen({required this.post});
+
+  @override
+  _PostDetailsScreenState createState() => _PostDetailsScreenState();
+}
+
+class _PostDetailsScreenState extends State<PostDetailsScreen> {
+  List<Comment> comments = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchComments();
+  }
+
+  Future<void> fetchComments() async {
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments'));
+    if (response.statusCode == 200) {
+      setState(() {
+        comments = (json.decode(response.body) as List).map((data) => Comment.fromJson(data)).toList();
+      });
+    } else {
+      throw Exception('Failed to load comments');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Post Details'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.post.title,
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.post.body, // Display post body
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Author: ${widget.post.author["name"]}',
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: comments.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(comments[index].name),
+                  subtitle: Text(comments[index].body),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
