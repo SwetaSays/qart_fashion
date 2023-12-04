@@ -1,5 +1,4 @@
-
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, unnecessary_null_comparison
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
 
 import 'dart:convert';
 
@@ -8,7 +7,6 @@ import 'package:qart_fashion/model/author_model.dart';
 import 'package:qart_fashion/model/post_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:qart_fashion/view/post_details_screen.dart';
-
 
 class PostListScreen extends StatefulWidget {
   const PostListScreen({super.key});
@@ -55,29 +53,43 @@ class _PostListScreenState extends State<PostListScreen> {
       appBar: AppBar(
         title: const Text('Posts'),
       ),
-      body: posts == null
+      body: posts.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
-          itemCount: posts.length,
-          itemBuilder: (context, index) {
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
           final post = posts[index];
           final author = authors.firstWhere((a) => a.id == post.userId);
 
-          return ListTile(
-            title: Text(post.title!),
-            subtitle: Text('Author: ${author.name}'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PostDetailsScreen(post: post, author: author),
+          return Card(
+            elevation: 3,
+            margin: const EdgeInsets.all(8),
+            child: ListTile(
+              title: Text(
+                post.title!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-              );
-            },
+              ),
+              subtitle: Text(
+                'Author: ${author.name}',
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PostDetailsScreen(post: post, author: author),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
     );
   }
 }
-

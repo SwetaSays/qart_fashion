@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -38,15 +38,29 @@ class PostDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                post.title!,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              Card(
+                elevation: 3,
+                margin: const EdgeInsets.only(bottom: 16),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        post.title!,
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text('Author: ${author.name}'),
+                      const SizedBox(height: 16),
+                      Text(
+                        post.body!,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              const SizedBox(height: 8),
-              Text('Author: ${author.name}'),
-              const SizedBox(height: 16),
-              Text(post.body!),
-              const SizedBox(height: 16),
               const Text(
                 'Comments:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -63,10 +77,14 @@ class PostDetailsScreen extends StatelessWidget {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: comments
-                          .map((comment) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          .map((comment) => Card(
+                        elevation: 3,
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
                         child: ListTile(
-                          title: Text(comment.name!),
+                          title: Text(
+                            comment.name!,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Text(comment.body!),
                         ),
                       ))
