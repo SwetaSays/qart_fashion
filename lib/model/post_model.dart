@@ -1,22 +1,26 @@
+// ignore_for_file: camel_case_types
+
 class Post {
-  final int id;
-  final String title;
-  final String body;
-  final Map<String, dynamic> author;
+  int? userId;
+  int? id;
+  String? title;
+  String? body;
 
-  Post({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.author,
-  });
+  Post({this.userId, this.id, this.title, this.body});
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      id: json['id'],
-      title: json['title'],
-      body: json['body'],
-      author: json['author'],
-    );
+  Post.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    id = json['id'];
+    title = json['title'];
+    body = json['body'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['userId'] = userId;
+    data['id'] = id;
+    data['title'] = title;
+    data['body'] = body;
+    return data;
   }
 }

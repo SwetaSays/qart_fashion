@@ -1,13 +1,17 @@
 class Comment {
-  final String name;
-  final String body;
+  int? postId;
+  int? id;
+  String? name;
+  String? email;
+  String? body;
 
-  Comment({required this.name, required this.body});
+  Comment({this.postId, this.id, this.name, this.email, this.body});
 
-  factory Comment.fromJson(Map<String, dynamic> json) {
-    return Comment(
-      name: json['name'],
-      body: json['body'],
-    );
+  Comment.fromJson(Map<String, dynamic> json) {
+    postId = json['postId'];
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    body = json['body'];
   }
 }
