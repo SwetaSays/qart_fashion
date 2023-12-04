@@ -18,8 +18,8 @@ class PostListScreen extends StatefulWidget {
 }
 
 class _PostListScreenState extends State<PostListScreen> {
-  late List<Post> posts;
-  late List<Author> authors;
+  late List<Post> posts = [];
+  late List<Author> authors = [];
 
   @override
   void initState() {
@@ -58,8 +58,8 @@ class _PostListScreenState extends State<PostListScreen> {
       body: posts == null
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
+          itemCount: posts.length,
+          itemBuilder: (context, index) {
           final post = posts[index];
           final author = authors.firstWhere((a) => a.id == post.userId);
 
